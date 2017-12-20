@@ -7,3 +7,4 @@ RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
 RUN apt-get update && apt-get install -yq libpq-dev nodejs vim-common postgresql-client-9.6 libfftw3-dev fftw3
 
 RUN npm install elasticdump -g
+RUN npm install highcharts-export-server -g
