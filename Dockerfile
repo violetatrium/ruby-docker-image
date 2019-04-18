@@ -1,8 +1,8 @@
-FROM ruby:2.6.2
+FROM ruby:2.6.3
 
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
 
 RUN apt-get update && apt-get install -yq libpq-dev nodejs vim-common postgresql-client-10 libfftw3-dev fftw3 locales locales-all
 
