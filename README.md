@@ -1,13 +1,35 @@
 # ruby-docker-image
 This is the Minim base docker image that is bassed off of the base Ruby docker iamge.
 
-# Building
+There are two Dockerfiles, one builds an image based on the `ruby:<version>`
+docker image, the other on the `ruby:<version>-alpine<alpine-version>`.
+
+## Building
 ```
-usage: ./bin/push.sh [IMAGE_TAG]
+# To build the ruby docker image
+$ make image
 
-A tool to build and push this docker container to dockerhub.
-You must be authenticated with docker have have access to the repo.
+# To build the alpine image
+$ make image/alpine
+```
 
-Arguments:
-  [IMAGE_TAG] - The tag name you want the image to have
+Use the `VERSION` environment variable to build a specific tag
+```
+$ VERSION=1.1.1 make image
+$ VERSION=1.1.1 make image/alpine
+```
+
+All builds will tag the version as well as `latest`.
+
+## Pushing Image
+To push the image to docker hub:
+```
+# To push the latest versions
+$ make docker/push/latest
+
+# To push the tagged versions
+$ make docker/push/version
+
+# To push both
+$ make docker/push
 ```
