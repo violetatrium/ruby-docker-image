@@ -7,12 +7,7 @@ jobs:
       - image: docker:stable-git
     steps:
       - checkout
-      - run: |
-          make image
-          echo $(docker image inspect --format="{{index .RepoDigests 0}}" minimsecure/ruby-docker-image) > /tmp/image.txt
-      - store_artifacts:
-          path: /tmp/image.txt
-          destination: image
+      - run: make image
 
 workflows:
   build_test_deploy:
