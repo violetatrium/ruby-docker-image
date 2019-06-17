@@ -2,7 +2,6 @@
 version: 2.1
 orbs:
   docker: circleci/docker@0.5.1
-  clair-scanner: ovotech/clair-scanner@1.4.33
 
 jobs:
   build:
@@ -17,18 +16,7 @@ jobs:
           path: /tmp/image.txt
           destination: image
 
-  scan:
-    executor: clair-scanner/default
-    steps:
-      - checkout
-      - clair/scan:
-          image_file:
-            /tmp/image.txt
-
 workflows:
   build_test_deploy:
     jobs:
       - build
-      - scan:
-          requires:
-            - build
