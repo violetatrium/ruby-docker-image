@@ -1,6 +1,7 @@
 FROM ruby:2.6.3-alpine3.9
 
-RUN apk --no-cache upgrade && apk --no-cache add curl nodejs nodejs-npm postgresql-client postgresql-dev fftw fftw-dev
+RUN apk --no-cache upgrade && \
+    apk --no-cache add curl nodejs nodejs-npm postgresql-client postgresql-dev fftw fftw-dev
 
 RUN npm install elasticdump -g
 RUN ACCEPT_HIGHCHARTS_LICENSE=YES npm install highcharts-export-server -g --unsafe-perm
