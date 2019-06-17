@@ -1,14 +1,10 @@
 ---
 version: 2.1
-orbs:
-  docker: circleci/docker@0.5.1
 
 jobs:
   build:
-    executor: docker/machine
     steps:
       - checkout
-      - docker/check
       - run: |
           make image
           echo $(docker image inspect --format="{{index .RepoDigests 0}}" minimsecure/ruby-docker-image) > /tmp/image.txt
