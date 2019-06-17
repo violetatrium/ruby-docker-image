@@ -3,11 +3,9 @@ version: 2.1
 
 jobs:
   build:
-    docker:
-      - image: docker:stable-git
+    machine: true
     steps:
       - checkout
-      - run: apk add --no-cache make
       - run: make image
 
 workflows:
