@@ -7,6 +7,7 @@ jobs:
     steps:
       - checkout
       - run: make image
+      - run: make image/alpine
 
 workflows:
   build_test_deploy:
