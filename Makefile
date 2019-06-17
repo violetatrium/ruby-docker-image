@@ -4,7 +4,7 @@ DOCKER_IMAGE=minimsecure/ruby-docker-image
 .PHONY: image
 image:
 	docker build \
-		-t minimsecure/ruby-docker-image:$(VERSION) \
+		-t $(DOCKER_IMAGE):$(VERSION) \
 		-t $(DOCKER_IMAGE):latest \
 		-f Dockerfile \
 		.
@@ -20,15 +20,15 @@ image/alpine:
 .PHONY: images
 images: image image/alpine
 
-.PHONY: docker/push/latest
-docker/push/version:
-	@docker push $(DOCKER_IMAGE):latest
+.PHONY: docker/push/alpine
+docker/push/alpine:
+	@docker push $(DOCKER_IMAGE)-alpine:$(VERSION)
 	@docker push $(DOCKER_IMAGE)-alpine:latest
 
-.PHONY: docker/push/version
-docker/push/version:
+.PHONY: docker/push/image
+docker/push/image:
 	@docker push $(DOCKER_IMAGE):$(VERSION)
-	@docker push $(DOCKER_IMAGE)-alpine:$(VERSION)
+	@docker push $(DOCKER_IMAGE):latest
 
 .PHONY: docker/push
-docker/push: docker/push/version docker/push/latest
+docker/push: docker/push/alpine docker/push/image
