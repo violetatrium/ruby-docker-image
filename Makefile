@@ -12,8 +12,7 @@ image:
 .PHONY: image/alpine
 image/alpine:
 	docker build \
-		-t $(DOCKER_IMAGE)-alpine:$(VERSION) \
-		-t $(DOCKER_IMAGE)-alpine:latest \
+		-t $(DOCKER_IMAGE):$(VERSION)-alpine \
 		-f Dockerfile.alpine \
 		.
 
@@ -22,8 +21,7 @@ images: image image/alpine
 
 .PHONY: docker/push/alpine
 docker/push/alpine:
-	@docker push $(DOCKER_IMAGE)-alpine:$(VERSION)
-	@docker push $(DOCKER_IMAGE)-alpine:latest
+	@docker push $(DOCKER_IMAGE):$(VERSION)-alpine
 
 .PHONY: docker/push/image
 docker/push/image:
