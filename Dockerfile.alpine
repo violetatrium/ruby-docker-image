@@ -1,7 +1,9 @@
 FROM ruby:2.6.4-alpine3.9
 
 RUN apk --no-cache upgrade && \
-    apk --no-cache add curl libcurl curl-dev python3 python3-dev py3-pip build-base nodejs nodejs-npm postgresql-client postgresql-dev git fftw fftw-dev yarn && \
+    apk --no-cache add \
+        curl libcurl curl-dev python3 python3-dev py3-pip build-base nodejs nodejs-npm \
+        postgresql-client postgresql-dev git fftw fftw-dev yarn p7zip && \
     pip3 install awscli requests
 
 RUN npm install elasticdump -g && \
@@ -16,22 +18,14 @@ RUN apk --no-cache add ca-certificates wget && \
 
 RUN /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8
 
-RUN printf '#!/usr/bin/env python3\n\
-import sys\n\
-from zipfile import PyZipFile\n\
-for zip_file in sys.argv[1:]:\n\
-    pzf = PyZipFile(zip_file)\n\
-    pzf.extractall()\n' >> /usr/local/bin/pyunzip.py && \
-    chmod +x /usr/local/bin/pyunzip.py
-
 # Install sonarqube
 ENV SONAR_SCANNER_VER 3.3.0.1492-linux
+COPY sonar-waittask /usr/local/bin/
 RUN curl -O https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VER}.zip && \
-    pyunzip.py sonar-scanner-cli-${SONAR_SCANNER_VER}.zip && \
+    7z x sonar-scanner-cli-${SONAR_SCANNER_VER}.zip && \
     mv sonar-scanner-${SONAR_SCANNER_VER}/ /opt/sonar-scanner-${SONAR_SCANNER_VER}/ && \
     rm sonar-scanner-cli-${SONAR_SCANNER_VER}.zip && \
     ln -s /opt/sonar-scanner-${SONAR_SCANNER_VER}/bin/sonar-scanner /usr/local/bin/sonar-scanner
-
 
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
