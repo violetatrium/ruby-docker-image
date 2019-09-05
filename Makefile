@@ -31,7 +31,7 @@ images: image image/alpine
 docker/push/alpine:
 	@docker push $(DOCKER_IMAGE):$(VERSION)-alpine
 
-.PHONY: docker/push/alpine
+.PHONY: docker/push/assetbuilder
 docker/push/assetbuilder:
 	@docker push $(ASSET_BUILDER):$(VERSION)-alpine
 
