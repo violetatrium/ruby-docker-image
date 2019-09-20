@@ -10,6 +10,13 @@ image:
 		-f Dockerfile \
 		.
 
+.PHONY: image/slim
+image/slim:
+	docker build \
+		-t $(DOCKER_IMAGE):$(VERSION)-slim \
+		-f Dockerfile.slim \
+		.
+
 .PHONY: image/alpine
 image/alpine:
 	docker build \
@@ -30,6 +37,10 @@ images: image image/alpine
 .PHONY: docker/push/alpine
 docker/push/alpine:
 	@docker push $(DOCKER_IMAGE):$(VERSION)-alpine
+
+.PHONY: docker/push/slim
+docker/push/slim:
+	@docker push $(DOCKER_IMAGE):$(VERSION)-slim
 
 .PHONY: docker/push/assetbuilder
 docker/push/assetbuilder:
