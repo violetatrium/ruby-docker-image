@@ -2,6 +2,7 @@ VERSION?=$(shell git describe --tags 2> /dev/null || echo '0.0.0')
 DOCKER_IMAGE=minimsecure/ruby-docker-image
 ASSET_BUILDER=minimsecure/assetbuilder
 
+# This is the old (bloated) image
 .PHONY: image
 image:
 	docker build \
@@ -10,6 +11,8 @@ image:
 		-f Dockerfile \
 		.
 
+# This is the new image we are using because we can't use alpine
+# due to glibc compatibility issues
 .PHONY: image/slim
 image/slim:
 	docker build \
@@ -17,34 +20,12 @@ image/slim:
 		-f Dockerfile.slim \
 		.
 
-.PHONY: image/alpine
-image/alpine:
-	docker build \
-		-t $(DOCKER_IMAGE):$(VERSION)-alpine \
-		-f Dockerfile.alpine \
-		.
-
-.PHONY: image/assetbuilder
-image/assetbuilder:
-	docker build \
-		-t $(ASSET_BUILDER):$(VERSION)-alpine \
-		-f Dockerfile.assetbuilder \
-		.
-
 .PHONY: images
-images: image image/alpine
-
-.PHONY: docker/push/alpine
-docker/push/alpine:
-	@docker push $(DOCKER_IMAGE):$(VERSION)-alpine
+images: image image/slim
 
 .PHONY: docker/push/slim
 docker/push/slim:
 	@docker push $(DOCKER_IMAGE):$(VERSION)-slim
-
-.PHONY: docker/push/assetbuilder
-docker/push/assetbuilder:
-	@docker push $(ASSET_BUILDER):$(VERSION)-alpine
 
 .PHONY: docker/push/image
 docker/push/image:
@@ -52,4 +33,4 @@ docker/push/image:
 	@docker push $(DOCKER_IMAGE):latest
 
 .PHONY: docker/push
-docker/push: docker/push/alpine docker/push/image
+docker/push: docker/push/slim docker/push/image
