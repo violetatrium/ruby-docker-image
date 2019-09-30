@@ -1,5 +1,7 @@
 FROM ruby:2.6.3-slim-buster
 
+ENV OPENSSL_CONF /etc/ssl/
+
 RUN apt-get update && apt-get install -yq curl && \
     curl -sL https://deb.nodesource.com/setup_11.x | bash -
 
