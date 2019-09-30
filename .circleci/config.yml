@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - run: make image
-      - run: make image/alpine
+      - run: make image/slim
 
 workflows:
   build_test_deploy:
