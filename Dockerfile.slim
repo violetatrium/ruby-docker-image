@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -yq curl && \
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 RUN curl -sL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
-RUN apt-get install -yq git libcurl4-openssl-dev libpq-dev libsass-dev \
+RUN apt-get install -yq git imagemagick libcurl4-openssl-dev libpq-dev libsass-dev \
     locales locales-all musl musl-dev nodejs postgresql-client-11 python3-dev \
     libfontconfig1-dev python3-pip ruby ruby-dev yarn
 
