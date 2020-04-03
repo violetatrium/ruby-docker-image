@@ -15,8 +15,8 @@ $ make image/alpine
 
 Use the `VERSION` environment variable to build a specific tag
 ```
-$ VERSION=1.1.1 make image
-$ VERSION=1.1.1 make image/alpine
+$ VERSION=2.7.1 make image
+$ VERSION=2.6.3 make image/alpine
 ```
 
 All builds will tag the version as well as `latest`.
