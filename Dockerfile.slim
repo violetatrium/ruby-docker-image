@@ -1,0 +1,29 @@
+FROM ruby:2.6.3-slim-buster
+
+ENV OPENSSL_CONF /etc/ssl/
+
+RUN apt-get update && apt-get install -yq curl && \
+    curl -sL https://deb.nodesource.com/setup_11.x | bash -
+
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+RUN curl -sL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+
+RUN apt-get install -yq git imagemagick libcurl4-openssl-dev libpq-dev libsass-dev \
+    locales locales-all musl musl-dev nodejs postgresql-client-11 python3-dev \
+    libfontconfig1-dev python3-pip ruby ruby-dev yarn
+
+# RUN yarn add jest
+
+RUN pip3 install awscli requests
+
+RUN npm install elasticdump -g && \
+    ACCEPT_HIGHCHARTS_LICENSE=YES npm install highcharts-export-server -g --unsafe-perm
+
+RUN locale-gen en_US.UTF-8
+RUN update-locale en_US.UTF-8
+
+RUN gem update --system && gem install bundler
+
+ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
